@@ -1202,6 +1202,13 @@
       document.body.style.overflow = '';
       confetti({ particleCount: 70, spread: 80, origin: { y: 0.55 }, colors: ['#edeae0', '#8a7b6a', '#6b4c3b', '#c9c0b2', '#fff'] });
       playMusic();
+      // Force-reveal elements already in viewport (observer misses them when parent was display:none)
+      setTimeout(function () {
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          var r = el.getBoundingClientRect();
+          if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('in');
+        });
+      }, 80);
     });
 
     // Intersection Observer
